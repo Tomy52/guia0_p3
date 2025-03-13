@@ -1,23 +1,18 @@
 package Modelo.Implementaciones;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Expansion extends Item {
     private LocalDate fechaLanzamiento;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public Expansion(String genero, String creador, String titulo, String fechaLanzamiento) {
-        super(genero, creador, titulo);
-        this.fechaLanzamiento = LocalDate.parse(fechaLanzamiento,formatter);
+    public Expansion(int id, String genero, String creador, String titulo, LocalDate fechaLanzamiento) {
+        super(id, genero, creador, titulo);
+        this.fechaLanzamiento = fechaLanzamiento;
     }
 
     public LocalDate getFechaLanzamiento() {
         return fechaLanzamiento;
-    }
-
-    public void setFechaLanzamiento(String fechaLanzamiento) {
-        this.fechaLanzamiento = LocalDate.parse(fechaLanzamiento,formatter);
     }
 
     public void setFechaLanzamiento(LocalDate fechaLanzamiento) {
@@ -26,7 +21,18 @@ public class Expansion extends Item {
 
     @Override
     public String toString() {
-        return super.toString() + "\nFecha de lanzamiento: " + this.fechaLanzamiento.format(formatter);
+        return super.toString() + "\nFecha de lanzamiento: " + this.fechaLanzamiento;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Expansion expansion)) return false;
+        if (!super.equals(o)) return false;
+        return Objects.equals(fechaLanzamiento, expansion.fechaLanzamiento);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), fechaLanzamiento);
+    }
 }

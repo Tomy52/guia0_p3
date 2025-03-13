@@ -1,14 +1,17 @@
 package Modelo.Implementaciones;
 
-public abstract class Item implements Comparable<Item>{
+import Modelo.Interfaces.Media;
+
+import java.util.Objects;
+
+public abstract class Item implements Media,Comparable<Item> {
     private String titulo;
     private String creador;
     private String genero;
-    private static int count = 0;
     private final int id;
 
-    public Item(String genero, String creador, String titulo) {
-        this.id = count++;
+    public Item(int id, String genero, String creador, String titulo) {
+        this.id = id;
         this.genero = genero;
         this.creador = creador;
         this.titulo = titulo;
@@ -38,17 +41,8 @@ public abstract class Item implements Comparable<Item>{
         this.titulo = titulo;
     }
 
-    public static int getCount() {
-        return count;
-    }
-
     public int getId() {
         return id;
-    }
-
-    @Override
-    public int compareTo(Item o) {
-        return this.id - o.id;
     }
 
     @Override
@@ -57,5 +51,21 @@ public abstract class Item implements Comparable<Item>{
                 "Titulo: " + titulo + "\n" +
                 "Creador: " + creador + "\n" +
                 "Genero: " + genero;
+    }
+
+    @Override
+    public int compareTo(Item item) {
+        return this.titulo.compareTo(item.getTitulo());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Item item)) return false;
+        return id == item.id && Objects.equals(titulo, item.titulo) && Objects.equals(creador, item.creador) && Objects.equals(genero, item.genero);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(titulo, creador, genero, id);
     }
 }
