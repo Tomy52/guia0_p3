@@ -1,9 +1,9 @@
 package Ui;
 
-import Excepciones.FechaLanzamientoExpansionNula;
+import Excepciones.ElementoInexistenteException;
 import Excepciones.IdentificadorDuplicadoException;
 import Modelo.Implementaciones.Expansion;
-import Modelo.Implementaciones.Item;
+import Modelo.Implementaciones.ItemBiblioteca;
 import Modelo.Implementaciones.Juego;
 import Repositorio.Implementaciones.RepositorioBiblioteca;
 
@@ -29,8 +29,9 @@ public class Menu {
             System.out.println("1. Agregar item a la biblioteca");
             System.out.println("2. Eliminar item de la biblioteca por ID");
             System.out.println("3. Ver items de la biblioteca en orden alfabetico");
-            System.out.println("4. Filtrar la biblioteca por genero");
-            System.out.println("5. Modificar item por ID");
+            System.out.println("4. Ver item por ID");
+            System.out.println("5. Filtrar la biblioteca por genero");
+            System.out.println("6. Modificar item por ID");
             System.out.println("0. Salir\n");
             System.out.println("\nOpcion elegida: ");
             opcionElegida = Integer.parseInt(scanner.nextLine());
@@ -39,8 +40,17 @@ public class Menu {
                 case 1:
                     agregarItem();
                     break;
+                case 2:
+                    eliminarItem();
+                    break;
                 case 3:
                     verBibliotecaAlfabeticamente();
+                    break;
+                case 4:
+                    verItemPorID();
+                    break;
+                case 5:
+                    filtrarPorGenero();
                     break;
                 case 0:
                     System.out.println("Saliendo...");
@@ -52,6 +62,7 @@ public class Menu {
         } while (opcionElegida != 0);
     }
 
+    //opc 1
     public void agregarItem() {
         int tipoItem;
         int id;
@@ -115,9 +126,88 @@ public class Menu {
 
     }
 
+    //opc 2
+    public void eliminarItem() {
+        int idEliminar;
+        System.out.println("Ingrese el nro de ID del item a eliminar:");
+
+        try {
+            idEliminar = Integer.parseInt(scanner.nextLine());
+            biblioteca.eliminar(idEliminar);
+            System.out.println("Item eliminado!");
+        } catch (ElementoInexistenteException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    //opc 3
     public void verBibliotecaAlfabeticamente() {
         System.out.println("Items de la biblioteca:");
         System.out.println(biblioteca.ordenarAlfabeticamente());
+    }
+
+    //opc 4
+    public void verItemPorID() {
+        System.out.println("Ingrese el ID del item a visualizar:");
+        try {
+            int id = Integer.parseInt(scanner.nextLine());
+            System.out.println(biblioteca.buscarPorId(id));
+        } catch (ElementoInexistenteException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    //opc 5
+    public void filtrarPorGenero() {
+        String genero;
+
+        System.out.println("Ingrese el genero por el cual desea filtrar:");
+        genero = scanner.nextLine();
+
+        System.out.println(biblioteca.filtrarPorGenero(genero));
+    }
+
+    //opc 6
+    public void modificarItem() {
+        ItemBiblioteca itemAModificar = null;
+        int opcMod;
+
+        System.out.println("Ingrese el ID del item a modificar:");
+        try {
+            int id = Integer.parseInt(scanner.nextLine());
+            itemAModificar = biblioteca.buscarPorId(id);
+        } catch (ElementoInexistenteException e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println("Elija el atributo que desea modificar:\n");
+        System.out.println("1. Genero");
+        System.out.println("2. Creador");
+        System.out.println("3. Titulo");
+
+        if (itemAModificar instanceof Juego) {
+            System.out.println("4. Version");
+        } else if (itemAModificar instanceof Expansion) {
+            System.out.println("4. Fecha de lanzamiento");
+        }
+
+        System.out.println("\nOpcion elegida: ");
+        opcMod = Integer.parseInt(scanner.nextLine());
+
+        switch (opcMod) {
+            case 1:
+                //cambiarGenero();
+                break;
+            case 2:
+                //cambiarCreador();
+                break;
+            case 3:
+                //cambiarTitulo();
+                break;
+            default:
+                System.out.println("Ingrese una opcion valida");
+                break;
+        }
     }
 
 }

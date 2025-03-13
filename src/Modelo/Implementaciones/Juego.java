@@ -2,7 +2,7 @@ package Modelo.Implementaciones;
 
 import java.util.Objects;
 
-public class Juego extends Item {
+public class Juego extends ItemBiblioteca {
     private double nroVersion;
 
     public Juego(int id, String genero, String creador, String titulo, double nroVersion) {

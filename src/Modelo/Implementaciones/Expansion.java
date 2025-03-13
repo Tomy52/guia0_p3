@@ -3,7 +3,7 @@ package Modelo.Implementaciones;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Expansion extends Item {
+public class Expansion extends ItemBiblioteca {
     private LocalDate fechaLanzamiento;
 
     public Expansion(int id, String genero, String creador, String titulo, LocalDate fechaLanzamiento) {

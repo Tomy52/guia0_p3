@@ -4,19 +4,20 @@ import Modelo.Interfaces.Media;
 
 import java.util.Objects;
 
-public abstract class Item implements Media,Comparable<Item> {
-    private String titulo;
-    private String creador;
-    private String genero;
-    private final int id;
+public abstract class ItemBiblioteca implements Media {
+    protected String titulo;
+    protected String creador;
+    protected String genero;
+    protected final int id;
 
-    public Item(int id, String genero, String creador, String titulo) {
+    public ItemBiblioteca(int id, String genero, String creador, String titulo) {
         this.id = id;
         this.genero = genero;
         this.creador = creador;
         this.titulo = titulo;
     }
 
+    @Override
     public String getGenero() {
         return genero;
     }
@@ -25,6 +26,7 @@ public abstract class Item implements Media,Comparable<Item> {
         this.genero = genero;
     }
 
+    @Override
     public String getCreador() {
         return creador;
     }
@@ -33,6 +35,7 @@ public abstract class Item implements Media,Comparable<Item> {
         this.creador = creador;
     }
 
+    @Override
     public String getTitulo() {
         return titulo;
     }
@@ -41,6 +44,7 @@ public abstract class Item implements Media,Comparable<Item> {
         this.titulo = titulo;
     }
 
+    @Override
     public int getId() {
         return id;
     }
@@ -54,13 +58,13 @@ public abstract class Item implements Media,Comparable<Item> {
     }
 
     @Override
-    public int compareTo(Item item) {
+    public int compareTo(Media item) {
         return this.titulo.compareTo(item.getTitulo());
     }
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Item item)) return false;
+        if (!(o instanceof ItemBiblioteca item)) return false;
         return id == item.id && Objects.equals(titulo, item.titulo) && Objects.equals(creador, item.creador) && Objects.equals(genero, item.genero);
     }
 
